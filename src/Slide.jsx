@@ -96,8 +96,8 @@ export default class Slide extends Component {
     if (this.state.content) {
       return (
         <div
-          style={ slideStype }
           dangerouslySetInnerHTML={ { __html: this.state.content } }
+          style={ slideStype }
         />
       )
     } else {

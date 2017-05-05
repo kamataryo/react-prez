@@ -77,7 +77,7 @@
     "mocha/no-nested-tests": ["error"],
     "react/no-array-index-key": ["off"],
     "react/no-children-prop": ["error"],
-    "react/no-danger": ["error"],
+    "react/no-danger": ["off"],
     "react/no-danger-with-children": ["error"],
     "react/no-deprecated": ["error"],
     "react/no-did-mount-set-state": ["error"],

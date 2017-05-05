@@ -11,3 +11,7 @@ Presentation with React and markdown!
 $ npm install react react-dom prop-types --save
 $ npm install react-prez --save
 ```
+
+## repository
+
+https://github.com/kamataryo/react-prez
