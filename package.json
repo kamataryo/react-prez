@@ -1,6 +1,6 @@
 {
   "name": "react-prez",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Presentation with react",
   "main": "lib/index.js",
   "files": [
