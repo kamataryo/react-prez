@@ -2,7 +2,7 @@
   "name": "react-prez",
   "version": "0.0.1",
   "description": "Presentation with react",
-  "main": "lib/Presentation.js",
+  "main": "lib/index.js",
   "files": [
     "lib"
   ],
@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "immutability-helper": "^2.1.2",
+    "marked": "^0.3.6",
     "react-keydown": "^1.7.0",
     "superagent": "^3.5.2"
   },

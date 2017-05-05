@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
 import request              from 'superagent'
+import marked               from 'marked'
 import Loading              from './Loading.jsx'
+import style                from './styles/slide'
+
 /**
  * Define Slide Component
  * @return {ReactComponent} React Component
@@ -20,7 +23,7 @@ export default class Slide extends Component {
     ]),
     src      : PropTypes.string,
     type     : PropTypes.oneOf([
-      'text', 'html', 'markdown'
+      'domnode', 'html', 'markdown'
     ])
   }
 
@@ -31,7 +34,7 @@ export default class Slide extends Component {
   static defaultProps = {
     children : null,
     src      : '',
-    type     : 'text',
+    type     : 'domnode',
   }
 
   /**
@@ -49,12 +52,29 @@ export default class Slide extends Component {
    * @return {void}
    */
   componentWillMount() {
-    if (this.props.src !== '') {
+    if (this.props.src === '') {
+      switch (this.props.type) {
+        case 'domnode':
+        case 'html':
+          return this.setState(update(this.state, { content: { $set: this.props.children } }))
+        case 'markdown':
+          return this.setState(update(this.state, { content: { $set: marked(this.props.children) } }))
+        default:
+          return
+      }
+    } else {
       request
         .get(this.props.src)
         .end((err, res) => {
           if (!err) {
-            this.setState(update(this.state, { content: { $set: res.text } }))
+            switch (this.props.type) {
+              case 'html':
+                return this.setState(update(this.state, { content: { $set: res.text } }))
+              case 'markdown':
+                return this.setState(update(this.state, { content: { $set: marked(res.text) } }))
+              default:
+                return
+            }
           }
         })
     }
@@ -65,26 +85,28 @@ export default class Slide extends Component {
    * @return {ReactComponent} render a presentation
    */
   render() {
-    const { children, src, type } = this.props
-    const content = src ?
-      (this.state.content ? this.state.content : <Loading />) :
-      children
 
-    let result
-    if (type === 'text') {
-      result = (
-        <div className={ 'slide' }>
-          { content }
-        </div>
-      )
-    } else if (type === 'html') {
-      /* eslint-disable react/no-danger */
-      result = <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: content } } />
-    } else if (type === 'markdown') {
-      // parse markdown here
-      result = <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: content } } />
+    const slideStype = {
+      ...style.defaultSlideStyle,
+      ...this.props.style,
+      ...style.absoluteSlideStyle,
     }
 
-    return result
+
+    if (this.state.content) {
+      return (
+        <div
+          style={ slideStype }
+          dangerouslySetInnerHTML={ { __html: this.state.content } }
+        />
+      )
+    } else {
+      return (
+        <div style={ slideStype }>
+          <Loading />
+        </div>
+      )
+    }
+
   }
 }

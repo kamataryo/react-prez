@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
-import keydown from 'react-keydown'
+import keydown              from 'react-keydown'
 import Progress from './Progress.jsx'
-
+import style    from './styles/presentation'
 /**
  * enable to detect keydown
  * @type {Decorator}
@@ -81,24 +81,39 @@ export default class Presentation extends Component {
    */
   render() {
 
+    const presentationStype = {
+      ...style.defaultPresentationStyle,
+      ...this.props.style,
+      ...style.absolutePresentationStyle,
+    }
+
     return (
-      <div style={ { width: '100vw', height: '100vh', backgroundColor: 'salmon' } }>
+      <div style={ presentationStype }>
         <Progress length={ this.state.max } now={ this.state.now } />
-        <nav>
+
+        <nav style={ { display: 'none' } }>
           <button
-            id={ 'prev' }
+            id={ 'button-page-prev' }
             onClick={ () => this.page(-1) }
           >{ 'prev' }</button>
           <button
-            id={ 'next' }
+            id={ 'button-page-next' }
             onClick={ () => this.page(+1) }
           >{ 'next' }</button>
         </nav>
+
         {
-          this.props.children.map((child, i) => (
-            <div key={ `content${i}` } style={ { display: (i === this.state.now ? 'block' : 'none') } }>{ child }</div>
-          ))
+          this.props.children.map((child, i) => {
+            const style = { display: (i === this.state.now ? 'block' : 'none') }
+            return (
+              <div
+                key={ `content${i}` }
+                style={ style }
+              >{ child }</div>
+            )
+          })
         }
+
       </div>
     )
   }
