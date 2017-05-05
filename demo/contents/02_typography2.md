@@ -2,4 +2,4 @@
 
 |image|code|
 |:--:|:--:|
-|![laptop](../image/image.png)|`![laptop](../image/image.png)`|
+|![laptop](../image/image.jpg)|`![laptop](../image/image.jpg)`|
