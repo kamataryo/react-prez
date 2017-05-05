@@ -96,6 +96,7 @@ export default class Presentation extends Component {
         style={ presentationStype }
         className={ 'markdown-body' }
         onMouseDown={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
+        onTouchStart={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
       >
         <Progress length={ this.state.max } now={ this.state.now } />
 
