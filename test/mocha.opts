@@ -1,6 +1,7 @@
 --compilers js:babel-core/register
 --recursive
 --reporter dot
+--require ignore-styles
 
 ./test/**/*.test.jsx
 ./test/**/*.test.js
