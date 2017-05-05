@@ -80,6 +80,30 @@ export default class Presentation extends Component {
   }
 
   /**
+   * Judge swipe direction
+   * @param  {number} x pageX where swipe start
+   * @return {void}
+   */
+  swipeStart(x) {
+    this.setState(update(this.state, { swipeFromX: { $set: x } }))
+  }
+
+  /**
+   * decide swipe direction
+   * @param  {number} x pageX where sipe end
+   * @return {number}   +1: right, -1: left
+   */
+  swipeEnd(x) {
+    if (this.state.swipeFromX + 80 < x) {
+      return -1
+    } else if (this.state.swipeFromX - 80 > x) {
+      return +1
+    } else {
+      return 0
+    }
+  }
+
+  /**
    * render
    * @return {ReactComponent} render a presentation
    */
@@ -96,7 +120,8 @@ export default class Presentation extends Component {
         style={ presentationStype }
         className={ 'markdown-body' }
         onMouseDown={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
-        onTouchStart={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
+        onTouchStart={ e => this.swipeStart(e.changedTouches[0].pageX) }
+        onTouchEnd={ e => this.page(this.swipeEnd(e.changedTouches[0].pageX)) }
       >
         <Progress length={ this.state.max } now={ this.state.now } />
 
