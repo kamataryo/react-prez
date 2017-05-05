@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
 import keydown              from 'react-keydown'
-import Progress from './Progress.jsx'
-import style    from './styles/presentation'
+import Progress     from './Progress.jsx'
+import style        from './styles/presentation'
+import buttonStyles from './styles/buttons'
 import '../node_modules/github-markdown-css/github-markdown.css'
 import '../node_modules/highlight.js/styles/atom-one-light.css'
 
@@ -91,16 +92,22 @@ export default class Presentation extends Component {
     }
 
     return (
-      <div style={ presentationStype } className={ 'markdown-body' }>
+      <div
+        style={ presentationStype }
+        className={ 'markdown-body' }
+        onMouseDown={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
+      >
         <Progress length={ this.state.max } now={ this.state.now } />
 
         <nav style={ { display: 'none' } }>
           <button
             id={ 'button-page-prev' }
+            style={ buttonStyles.buttonPrev }
             onClick={ () => this.page(-1) }
           >{ 'prev' }</button>
           <button
             id={ 'button-page-next' }
+            style={ buttonStyles.buttonNext }
             onClick={ () => this.page(+1) }
           >{ 'next' }</button>
         </nav>
