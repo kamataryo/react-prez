@@ -2,10 +2,10 @@ export default {
 
   defaultPresentationStyle: {
     color: '#263238',
+    fontWeight: 'bold',
+    fontFamily: 'proxima-nova,"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif',
     backgroundColor: '#E0F2F1',
     fontSize: '30px',
-    padding: '40px',
-    boxSizing: 'border-box',
   },
 
   absolutePresentationStyle : {

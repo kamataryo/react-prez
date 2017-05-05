@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
 import request              from 'superagent'
+import marked               from 'marked'
 import Loading              from './Loading.jsx'
+import style                from './styles/slide'
+
 /**
  * Define Slide Component
  * @return {ReactComponent} React Component
@@ -49,12 +52,29 @@ export default class Slide extends Component {
    * @return {void}
    */
   componentWillMount() {
-    if (this.props.src !== '') {
+    if (this.props.src === '') {
+      switch (this.props.type) {
+        case 'domnode':
+        case 'html':
+          return this.setState(update(this.state, { content: { $set: this.props.children } }))
+        case 'markdown':
+          return this.setState(update(this.state, { content: { $set: marked(this.props.children) } }))
+        default:
+          return
+      }
+    } else {
       request
         .get(this.props.src)
         .end((err, res) => {
           if (!err) {
-            this.setState(update(this.state, { content: { $set: res.text } }))
+            switch (this.props.type) {
+              case 'html':
+                return this.setState(update(this.state, { content: { $set: res.text } }))
+              case 'markdown':
+                return this.setState(update(this.state, { content: { $set: marked(res.text) } }))
+              default:
+                return
+            }
           }
         })
     }
@@ -65,23 +85,27 @@ export default class Slide extends Component {
    * @return {ReactComponent} render a presentation
    */
   render() {
-    const { children, src, type } = this.props
 
-    if (src && !this.state.content) {
-      return <Loading />
+    const slideStype = {
+      ...style.defaultSlideStyle,
+      ...this.props.style,
+      ...style.absoluteSlideStyle,
+    }
+
+
+    if (this.state.content) {
+      return (
+        <div
+          style={ slideStype }
+          dangerouslySetInnerHTML={ { __html: this.state.content } }
+        />
+      )
     } else {
-      if (children) {
-        return <div className={ 'slide' }>{ children }</div>
-      } else {
-        if (type === 'html') {
-          /* eslint-disable react/no-danger */
-          return <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: this.state.content } } />
-        } else if (type === 'markdown') {
-          // parse markdown here
-          return <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: this.state.content } } />
-        }
-
-      }
+      return (
+        <div style={ slideStype }>
+          <Loading />
+        </div>
+      )
     }
 
   }
