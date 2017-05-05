@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Typography | customize style</h1>
+<h1 style="text-align: center">Usage</h1>
 
 ```javascript
 import react                   from 'react'
