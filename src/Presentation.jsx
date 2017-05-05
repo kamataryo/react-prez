@@ -4,6 +4,10 @@ import update               from 'immutability-helper'
 import keydown from 'react-keydown'
 import Progress from './Progress.jsx'
 
+/**
+ * enable to detect keydown
+ * @type {Decorator}
+ */
 @keydown
 /**
  * Define Presentation Component
@@ -30,6 +34,11 @@ export default class Presentation extends Component {
     children: null
   }
 
+  /**
+   * constructor
+   * @param  {Props} props firstly given props
+   * @return {void}
+   */
   constructor(props) {
     super(props)
     this.state = {
@@ -38,15 +47,13 @@ export default class Presentation extends Component {
     }
   }
 
-  page(diff) {
-    const next = diff + this.state.now
-    if (-1 < next && next < this.state.max + 1) {
-      this.setState(update(this.state, { now: { $set: next } }))
-    }
-  }
-
+  /**
+   * componentWillReceiveProps
+   * @param  {KeyDown} keydown KeyDown Object
+   * @return {void}
+   */
   componentWillReceiveProps({ keydown }) {
-    if (keydown.event) {
+    if (keydown && keydown.event) {
       const { code } = keydown.event
       if (code === 'ArrowRight') {
         this.page(+1)
@@ -57,24 +64,42 @@ export default class Presentation extends Component {
   }
 
   /**
+   * do paging
+   * @param  {number} diff +1, -1, ..
+   * @return {void}
+   */
+  page(diff) {
+    const next = diff + this.state.now
+    if (-1 < next && next < this.state.max + 1) {
+      this.setState(update(this.state, { now: { $set: next } }))
+    }
+  }
+
+  /**
    * render
    * @return {ReactComponent} render a presentation
    */
   render() {
 
-    return (<div style={ { width: '100vw', height: '100vh', backgroundColor: 'salmon' } }>
-      <Progress length={ this.state.max } now={ this.state.now } />
-      <nav>
-        <button
-          id={ 'prev' }
-          onClick={ () => this.page(-1) }
-        >{ 'prev' }</button>
-        <button
-          id={ 'next' }
-          onClick={ () => this.page(+1) }
-        >{ 'next' }</button>
-      </nav>
-      { this.props.children[this.state.now] }
-    </div>)
+    return (
+      <div style={ { width: '100vw', height: '100vh', backgroundColor: 'salmon' } }>
+        <Progress length={ this.state.max } now={ this.state.now } />
+        <nav>
+          <button
+            id={ 'prev' }
+            onClick={ () => this.page(-1) }
+          >{ 'prev' }</button>
+          <button
+            id={ 'next' }
+            onClick={ () => this.page(+1) }
+          >{ 'next' }</button>
+        </nav>
+        {
+          this.props.children.map((child, i) => (
+            <div key={ `content${i}` } style={ { display: (i === this.state.now ? 'block' : 'none') } }>{ child }</div>
+          ))
+        }
+      </div>
+    )
   }
 }

@@ -1,32 +1,26 @@
-import React, { Component } from 'react'
-import PropTypes            from 'prop-types'
-// import update               from 'immutability-helper'
+import React     from 'react'
+import PropTypes from 'prop-types'
 
 /**
- * Define Progress Component
- * @return {ReactComponent} React Component
+ * Display presentation progress
+ * @param {Props} props Given Props
+ * @return {ReactComponent} Progress Component
  */
-export default class Progress extends Component {
+const Progress = props => {
 
-  /**
-   * props type check
-   * @type {Object}
-   */
-  static propTypes = {
-    length : PropTypes.number.isRequired,
-    now    : PropTypes.number.isRequired,
-  }
+  const { length, now } = props
 
-  /**
-   * render
-   * @return {ReactComponent} render a presentation
-   */
-  render() {
-
-    const { length, now } = this.props
-
-    return (
-      <p style={ { marginTop: 0 } } className={ 'progress-text' }>{ `${now}/${length}` }</p>
-    )
-  }
+  return (
+    <p
+      className={ 'progress-text' }
+      style={ { marginTop: 0 } }
+    >{ `${now}/${length}` }</p>
+  )
 }
+
+Progress.propTypes = {
+  length : PropTypes.number.isRequired,
+  now    : PropTypes.number.isRequired,
+}
+
+export default Progress

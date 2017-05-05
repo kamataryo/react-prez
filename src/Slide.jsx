@@ -18,7 +18,10 @@ export default class Slide extends Component {
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
-    src      : PropTypes.string
+    src      : PropTypes.string,
+    type     : PropTypes.oneOf([
+      'text', 'html', 'markdown'
+    ])
   }
 
   /**
@@ -28,6 +31,7 @@ export default class Slide extends Component {
   static defaultProps = {
     children : null,
     src      : '',
+    type     : 'text',
   }
 
   /**
@@ -44,7 +48,7 @@ export default class Slide extends Component {
    * Component Will Mount
    * @return {void}
    */
-  ComponentWillMount() {
+  componentWillMount() {
     if (this.props.src !== '') {
       request
         .get(this.props.src)
@@ -61,13 +65,26 @@ export default class Slide extends Component {
    * @return {ReactComponent} render a presentation
    */
   render() {
-    const { children, src } = this.props
+    const { children, src, type } = this.props
     const content = src ?
-      (this.state.content ? this.state.content : Loading) :
+      (this.state.content ? this.state.content : <Loading />) :
       children
 
-    return (<div className={ 'slide' }>
-      { content }
-    </div>)
+    let result
+    if (type === 'text') {
+      result = (
+        <div className={ 'slide' }>
+          { content }
+        </div>
+      )
+    } else if (type === 'html') {
+      /* eslint-disable react/no-danger */
+      result = <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: content } } />
+    } else if (type === 'markdown') {
+      // parse markdown here
+      result = <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: content } } />
+    }
+
+    return result
   }
 }

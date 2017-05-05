@@ -10,6 +10,7 @@ import contents from './contents'
 
 render(
   <Presentation>
+    <Slide src={ './contents/content3.md' } type={ 'html' } />
     <Slide>{ contents[0] }</Slide>
     <Slide>{ contents[1] }</Slide>
     <Slide>{ contents[2] }</Slide>
