@@ -12,7 +12,7 @@ describe('Presentation Component, ', () => {
         <div className={ 'children' } />
         <div className={ 'children' } />
       </Presentation>)
-      expect(wrapper.find('.children')).to.have.length(2)
+      expect(wrapper.find('.children')).to.have.length(1)
     })
   })
 })

@@ -5,14 +5,14 @@
 
 import React      from 'react'
 import { render } from 'react-dom'
-import Presentation, { Slide } from '../src/Presentation.jsx'
+import Presentation, { Slide } from '../src/index'
 import contents from './contents'
 
 render(
   <Presentation>
-    <Slide content={ contents[0] } type={ 'md' } />
-    <Slide content={ contents[1] } type={ 'md' } />
-    <Slide content={ contents[2] } type={ 'md' } />
+    <Slide>{ contents[0] }</Slide>
+    <Slide>{ contents[1] }</Slide>
+    <Slide>{ contents[2] }</Slide>
   </Presentation>,
   document.getElementById('presentation')
 )

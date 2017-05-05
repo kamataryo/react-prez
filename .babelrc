@@ -1,7 +1,12 @@
 {
-  "presets": ["env", "react"],
+  "presets": [
+    "env",
+    "react",
+    "es2015"
+  ],
   "plugins": [
     "transform-object-rest-spread",
-    "babel-plugin-transform-class-properties"
+    "transform-decorators-legacy",
+    "transform-class-properties"
   ]
 }

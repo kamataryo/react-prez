@@ -20,7 +20,6 @@ npm run build:preview
 pushd demo
 rm .gitignore
 rm preview.jsx
-rm vendor/.gitkeep
 
 git init
 git config user.name $GIT_USER

@@ -3,13 +3,6 @@ import PropTypes            from 'prop-types'
 // import update               from 'immutability-helper'
 
 /**
- * internal classname prefix
- * @type {string}
- */
-export const CLASS_PREFIX =  'react-prez__'
-
-
-/**
  * Define Progress Component
  * @return {ReactComponent} React Component
  */
@@ -33,7 +26,7 @@ export default class Progress extends Component {
     const { length, now } = this.props
 
     return (
-      <p className={ 'progress-text' }>{ `${now}/${length}` }</p>
+      <p style={ { marginTop: 0 } } className={ 'progress-text' }>{ `${now}/${length}` }</p>
     )
   }
 }
