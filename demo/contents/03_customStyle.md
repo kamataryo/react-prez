@@ -2,9 +2,9 @@
 
 ```javascript
 const style = {
-  color: 'winered',
-  backgroundColor: 'pink',
-  fontFamily: 'serif',
+  fontFamily      : 'serif',
+  color           : '#880E4F',
+  backgroundColor : '#ffcdd2',
 }
 
 render(

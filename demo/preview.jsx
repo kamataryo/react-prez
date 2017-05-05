@@ -8,9 +8,9 @@ import { render } from 'react-dom'
 import Presentation, { Slide } from '../src/index'
 
 const style3 = {
-  color: 'winered',
-  backgroundColor: 'pink',
-  fontFamily: 'serif',
+  color           : '#880E4F',
+  backgroundColor : '#ffcdd2',
+  fontFamily      : 'serif',
 }
 
 render(
