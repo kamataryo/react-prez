@@ -24,10 +24,12 @@ export default class Presentation extends Component {
    * @type {Object}
    */
   static propTypes = {
-    children: PropTypes.oneOfType([
+    children         : PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
+    progressBarStyle : PropTypes.object,
+    style            : PropTypes.object,
   }
 
   /**
@@ -35,7 +37,9 @@ export default class Presentation extends Component {
    * @type {Object}
    */
   static defaultProps = {
-    children: null
+    children         : null,
+    progressBarStyle : {},
+    style            : {},
   }
 
   /**
@@ -114,6 +118,7 @@ export default class Presentation extends Component {
       ...this.props.style,
       ...style.absolutePresentationStyle,
     }
+    const { progressBarStyle } = this.props
 
     return (
       <div
@@ -123,7 +128,7 @@ export default class Presentation extends Component {
         onTouchStart={ e => this.swipeStart(e.changedTouches[0].pageX) }
         onTouchEnd={ e => this.page(this.swipeEnd(e.changedTouches[0].pageX)) }
       >
-        <Progress length={ this.state.max } now={ this.state.now } />
+        <Progress length={ this.state.max } now={ this.state.now } style={ progressBarStyle } />
 
         <nav style={ { display: 'none' } }>
           <button

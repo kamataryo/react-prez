@@ -8,19 +8,27 @@ import PropTypes from 'prop-types'
  */
 const Progress = props => {
 
-  const { length, now } = props
+  const { length, now, style } = props
 
-  const barStyle = {
-    display                  : 'block',
-    position                 : 'fixed',
-    top                      : 0,
-    left                     : 0,
-    width                    : `${100 * now / length}%`,
-    height                   : '5px',
-    backgroundColor          : '#4DD0E1',
+  const defaultBarStyle = {
+    height                   : '8px',
+    backgroundColor          : '#4dd0e1',
     transitionDuration       : '.3s',
     transitionTimingFunction : 'ease-in-out',
+  }
 
+  const absoluteStyle = {
+    display  : 'block',
+    position : 'fixed',
+    top      : 0,
+    left     : 0,
+    width    : `${100 * now / length}%`,
+  }
+
+  const barStyle = {
+    ...defaultBarStyle,
+    ...style,
+    ...absoluteStyle,
   }
 
   return (
@@ -33,9 +41,18 @@ const Progress = props => {
   )
 }
 
+/**
+ * Type checking
+ * @type {Object}
+ */
 Progress.propTypes = {
   length : PropTypes.number.isRequired,
   now    : PropTypes.number.isRequired,
+  style  : PropTypes.object,
+}
+
+Progress.defaultProps = {
+  style: {},
 }
 
 export default Progress

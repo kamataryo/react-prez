@@ -7,6 +7,9 @@ import Loading              from './Loading.jsx'
 import style                from './styles/slide'
 import highlightJS          from 'highlight.js'
 
+/**
+ * Ebnable hilight.js
+ */
 marked.setOptions({
   highlight: code => highlightJS.highlightAuto(code).value
 })

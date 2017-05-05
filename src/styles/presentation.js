@@ -2,7 +2,6 @@ export default {
 
   defaultPresentationStyle: {
     color: '#37474F',
-    fontWeight: 'bold',
     fontFamily: 'proxima-nova,"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif',
     backgroundColor: '#E0F2F1',
     fontSize: '30px',

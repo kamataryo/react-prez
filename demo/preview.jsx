@@ -20,6 +20,8 @@ render(
     <Slide src={ './contents/01_typography1.md' } type={ 'markdown' } />
     <Slide src={ './contents/02_typography2.md' } type={ 'markdown' } />
     <Slide src={ './contents/03_customStyle.md' } type={ 'markdown' } style={ style3 } />
+    <Slide src={ './contents/04_API_Presentation.md' } type={ 'markdown' } />
+    <Slide src={ './contents/05_API_Slide.md' } type={ 'markdown' } />
   </Presentation>,
   document.getElementById('presentation')
 )

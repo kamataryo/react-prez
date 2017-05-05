@@ -2,4 +2,4 @@
 
 |image|code|
 |:--:|:--:|
-|![singing bird](../image/image.jpg)|`![singing bird](../image/image.jpg)`|
+|![singing bird](../image/image.jpg)|`![singing bird](./image/image.jpg)`|

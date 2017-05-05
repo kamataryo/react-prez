@@ -3,7 +3,7 @@
 ```javascript
 const style = {
   fontFamily      : 'serif',
-  color           : '#880E4F',
+  color           : '#880e4f',
   backgroundColor : '#ffcdd2',
 }
 
