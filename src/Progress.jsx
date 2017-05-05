@@ -10,11 +10,26 @@ const Progress = props => {
 
   const { length, now } = props
 
+  const barStyle = {
+    display                  : 'block',
+    position                 : 'fixed',
+    top                      : 0,
+    left                     : 0,
+    width                    : `${100 * now / length}%`,
+    height                   : '5px',
+    backgroundColor          : '#4DD0E1',
+    transitionDuration       : '.3s',
+    transitionTimingFunction : 'ease-in-out',
+
+  }
+
   return (
-    <p
+    <div
       className={ 'progress-text' }
-      style={ { marginTop: 0 } }
-    >{ `${now}/${length}` }</p>
+      style={ { margin: 0 } }
+    >
+      <div style={ barStyle } />
+    </div>
   )
 }
 

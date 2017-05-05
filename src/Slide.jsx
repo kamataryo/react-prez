@@ -20,7 +20,7 @@ export default class Slide extends Component {
     ]),
     src      : PropTypes.string,
     type     : PropTypes.oneOf([
-      'text', 'html', 'markdown'
+      'domnode', 'html', 'markdown'
     ])
   }
 
@@ -31,7 +31,7 @@ export default class Slide extends Component {
   static defaultProps = {
     children : null,
     src      : '',
-    type     : 'text',
+    type     : 'domnode',
   }
 
   /**
@@ -66,25 +66,23 @@ export default class Slide extends Component {
    */
   render() {
     const { children, src, type } = this.props
-    const content = src ?
-      (this.state.content ? this.state.content : <Loading />) :
-      children
 
-    let result
-    if (type === 'text') {
-      result = (
-        <div className={ 'slide' }>
-          { content }
-        </div>
-      )
-    } else if (type === 'html') {
-      /* eslint-disable react/no-danger */
-      result = <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: content } } />
-    } else if (type === 'markdown') {
-      // parse markdown here
-      result = <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: content } } />
+    if (src && !this.state.content) {
+      return <Loading />
+    } else {
+      if (children) {
+        return <div className={ 'slide' }>{ children }</div>
+      } else {
+        if (type === 'html') {
+          /* eslint-disable react/no-danger */
+          return <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: this.state.content } } />
+        } else if (type === 'markdown') {
+          // parse markdown here
+          return <div className={ 'slide' } dangerouslySetInnerHTML={ { __html: this.state.content } } />
+        }
+
+      }
     }
 
-    return result
   }
 }
