@@ -4,6 +4,9 @@ import update               from 'immutability-helper'
 import keydown              from 'react-keydown'
 import Progress from './Progress.jsx'
 import style    from './styles/presentation'
+import '../node_modules/github-markdown-css/github-markdown.css'
+import '../node_modules/highlight.js/styles/atom-one-light.css'
+
 /**
  * enable to detect keydown
  * @type {Decorator}
@@ -23,7 +26,7 @@ export default class Presentation extends Component {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
-    ])
+    ]),
   }
 
   /**
@@ -88,7 +91,7 @@ export default class Presentation extends Component {
     }
 
     return (
-      <div style={ presentationStype }>
+      <div style={ presentationStype } className={ 'markdown-body' }>
         <Progress length={ this.state.max } now={ this.state.now } />
 
         <nav style={ { display: 'none' } }>

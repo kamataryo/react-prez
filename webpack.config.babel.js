@@ -16,6 +16,10 @@ export default {
       {
         test: /.jsx?$/,
         use: [{ loader: 'babel-loader?compact=false' }]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
