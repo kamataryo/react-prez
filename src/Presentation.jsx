@@ -3,10 +3,14 @@ import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
 import keydown              from 'react-keydown'
 import Progress     from './Progress.jsx'
+import Controller   from './Controller.jsx'
 import style        from './styles/presentation'
-import buttonStyles from './styles/buttons'
-import '../node_modules/github-markdown-css/github-markdown.css'
-import '../node_modules/highlight.js/styles/atom-one-light.css'
+
+/**
+ * Webpack CSS bundle
+ */
+import 'github-markdown-css/github-markdown.css'
+import 'highlight.js/styles/atom-one-light.css'
 
 /**
  * enable to detect keydown
@@ -51,7 +55,8 @@ export default class Presentation extends Component {
     super(props)
     this.state = {
       now: 0,
-      max: this.props.children.length - 1
+      max: this.props.children.length - 1,
+      sendMessage: null,
     }
   }
 
@@ -77,9 +82,17 @@ export default class Presentation extends Component {
    * @return {void}
    */
   page(diff) {
+    if (diff === 0) {
+      return
+    }
     const next = diff + this.state.now
-    if (-1 < next && next < this.state.max + 1) {
+    const { max, sendMessage } = this.state
+    if (-1 < next && next < max + 1) {
       this.setState(update(this.state, { now: { $set: next } }))
+      if (typeof sendMessage === 'function') {
+        // websocket
+        sendMessage({ data: { pageNum: next } })
+      }
     }
   }
 
@@ -107,6 +120,10 @@ export default class Presentation extends Component {
     }
   }
 
+  // _onSocketMessageRecieved(socket, arg) {
+  //   socket.
+  // }
+
   /**
    * render
    * @return {ReactComponent} render a presentation
@@ -121,39 +138,35 @@ export default class Presentation extends Component {
     const { progressBarStyle } = this.props
 
     return (
-      <div
-        style={ presentationStype }
-        className={ 'markdown-body' }
-        onMouseDown={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
-        onTouchStart={ e => this.swipeStart(e.changedTouches[0].pageX) }
-        onTouchEnd={ e => this.page(this.swipeEnd(e.changedTouches[0].pageX)) }
-      >
-        <Progress length={ this.state.max } now={ this.state.now } style={ progressBarStyle } />
+      <div>
+        <Controller
+          onButtonPrevClick={ () => this.page(-1) }
+          onButtonNextClick={ () => this.page(+1) }
+          onSocketMessageRecieved={ data => this.page(data.pageNum - diff) }
+          liftUpSendingMessage={ func => this.setState(update(this.state, { sendMessage: { $set: func } })) }
+        />
+        <div
+          style={ presentationStype }
+          className={ 'markdown-body' }
+          onMouseDown={ e => this.page(e.pageX > window.innerWidth / 2 ? +1 : -1) }
+          onTouchStart={ e => this.swipeStart(e.changedTouches[0].pageX) }
+          onTouchEnd={ e => this.page(this.swipeEnd(e.changedTouches[0].pageX)) }
+        >
+          <Progress length={ this.state.max } now={ this.state.now } style={ progressBarStyle } />
 
-        <nav style={ { display: 'none' } }>
-          <button
-            id={ 'button-page-prev' }
-            style={ buttonStyles.buttonPrev }
-            onClick={ () => this.page(-1) }
-          >{ 'prev' }</button>
-          <button
-            id={ 'button-page-next' }
-            style={ buttonStyles.buttonNext }
-            onClick={ () => this.page(+1) }
-          >{ 'next' }</button>
-        </nav>
+          {
+            this.props.children.map((child, i) => {
+              const style = { display: (i === this.state.now ? 'block' : 'none') }
+              return (
+                <div
+                  key={ `content${i}` }
+                  style={ style }
+                >{ child }</div>
+              )
+            })
+          }
 
-        {
-          this.props.children.map((child, i) => {
-            const style = { display: (i === this.state.now ? 'block' : 'none') }
-            return (
-              <div
-                key={ `content${i}` }
-                style={ style }
-              >{ child }</div>
-            )
-          })
-        }
+        </div>
 
       </div>
     )
