@@ -79,9 +79,10 @@ export default class Presentation extends Component {
   /**
    * do paging
    * @param  {number} diff +1, -1, ..
+   * @param  {boolean} preventSendingMessage stop sendMessage
    * @return {void}
    */
-  page(diff) {
+  page(diff, preventSendingMessage) {
     if (diff === 0) {
       return
     }
@@ -89,9 +90,9 @@ export default class Presentation extends Component {
     const { max, sendMessage } = this.state
     if (-1 < next && next < max + 1) {
       this.setState(update(this.state, { now: { $set: next } }))
-      if (typeof sendMessage === 'function') {
+      if (typeof sendMessage === 'function' && !preventSendingMessage) {
         // websocket
-        sendMessage({ data: { pageNum: next } })
+        sendMessage({ pageNum: next })
       }
     }
   }
@@ -111,18 +112,18 @@ export default class Presentation extends Component {
    * @return {number}   +1: right, -1: left
    */
   swipeEnd(x) {
-    if (this.state.swipeFromX + 80 < x) {
+    if (this.state.swipeFromX + 150 < x) {
       return -1
-    } else if (this.state.swipeFromX - 80 > x) {
+    } else if (this.state.swipeFromX - 150 > x) {
       return +1
     } else {
       return 0
     }
   }
 
-  // _onSocketMessageRecieved(socket, arg) {
-  //   socket.
-  // }
+  _onSocketMessageRecieved(data) {
+    this.page(data.pageNum - this.state.now, true)
+  }
 
   /**
    * render
@@ -142,7 +143,7 @@ export default class Presentation extends Component {
         <Controller
           onButtonPrevClick={ () => this.page(-1) }
           onButtonNextClick={ () => this.page(+1) }
-          onSocketMessageRecieved={ data => this.page(data.pageNum - diff) }
+          onSocketMessageRecieved={ this._onSocketMessageRecieved.bind(this) }
           liftUpSendingMessage={ func => this.setState(update(this.state, { sendMessage: { $set: func } })) }
         />
         <div

@@ -45,6 +45,7 @@ export default class Controller extends Component {
     super(props)
     this.state = {
       url        : 'ws://localhost:3001/echo',
+      recognizr  : '',
       username   : '',
       password   : '',
       connection : null
@@ -72,31 +73,37 @@ export default class Controller extends Component {
   /**
    * connect to WebSocket Server
    * @param  {string} url      WebSocket URL
+   * @param  {string} recognizr separative id to synchronize
    * @param  {string} username username
    * @param  {string} password password
    * @return {void}
    */
-  connect(url, username, password) {
+  connect(url, recognizr, username, password) {
     const connection = new WebSocket(url, ['soap'])
     connection.onopen = () => {
       const message = JSON.stringify({
         type: 'authentication',
+        recognizr,
         username,
         password,
       })
       connection.send(message)
     }
     connection.onmessage = e => {
-      const message = JSON.parse(e.data)
-      if (!message.success) {
-        return
-      }
-      const { onSocketMessageRecieved } = this.props
-      switch (message.type) {
+      const data = JSON.parse(e.data)
+
+      switch (data.type) {
         case 'authorization':
-          return this.setState(update(this.state, { connection: { $set: connection } }))
+          if (data.token) {
+            this.setState(update(this.state, {
+              connection : { $set: connection },
+              token      : { $set: data.token },
+            }))
+          }
+          break
         case 'downstream':
-          return onSocketMessageRecieved(message.data)
+          this.props.onSocketMessageRecieved(data)
+          break
         default:
           return
       }
@@ -113,9 +120,10 @@ export default class Controller extends Component {
    * @return {void}
    */
   sendMessage(data) {
-    const { connection } = this.state
-    if (connection) {
-      connection.send(JSON.stringify(data))
+    const { connection, token } = this.state
+    const { pageNum } = data
+    if (connection && token) {
+      connection.send(JSON.stringify({ type: 'upstream', pageNum, token }))
     } else {
       console.log('NO CONNECTION')
     }
@@ -147,6 +155,7 @@ export default class Controller extends Component {
 
     const {
       url,
+      recognizr,
       username,
       password
     } = this.state
@@ -180,6 +189,11 @@ export default class Controller extends Component {
                 onChange={ e => this._onFormChange('url', e.target.value) }
               />
               <input
+                type={ 'recognizr' }
+                value={ recognizr }
+                onChange={ e => this._onFormChange('recognizr', e.target.value) }
+              />
+              <input
                 type={ 'text' }
                 value={ username }
                 onChange={ e => this._onFormChange('username', e.target.value) }
@@ -190,7 +204,7 @@ export default class Controller extends Component {
                 onChange={ e => this._onFormChange('password', e.target.value) }
               />
               <button
-                onClick={ () => this.connect(url, username, password) }
+                onClick={ () => this.connect(url, recognizr, username, password) }
               >{ 'connect' }</button>
             </p>
           )

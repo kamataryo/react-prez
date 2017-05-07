@@ -9,7 +9,7 @@
   "scripts": {
     "build": "NODE_ENV=production babel ./src --out-dir ./lib --source-maps inline",
     "build:preview": "node_modules/.bin/webpack -p",
-    "start": "webpack-dev-server --progress --colors --hot --inline --watch",
+    "start": "./bin/start.sh",
     "lint": "eslint . --ext=jsx --ext=js",
     "test": "mocha",
     "deploy:demo": "./bin/travis-deploy.sh",
@@ -37,6 +37,7 @@
     "eslint-plugin-react": "^6.10.3",
     "ignore-styles": "^5.0.1",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "prop-types": "^15.5.6",
     "react": "^15.5.3",
     "react-addons-test-utils": "^15.4.2",
@@ -51,9 +52,11 @@
     "github-markdown-css": "^2.6.0",
     "highlight.js": "^9.11.0",
     "immutability-helper": "^2.1.2",
+    "jsonwebtoken": "^7.4.0",
     "marked": "^0.3.6",
     "react-keydown": "^1.7.0",
-    "superagent": "^3.5.2"
+    "superagent": "^3.5.2",
+    "ws": "^2.3.1"
   },
   "peerDependencies": {
     "prop-types": "^15.5.0",

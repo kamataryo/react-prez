@@ -1,0 +1,6 @@
+{
+  "dependency": {
+    "jsonwebtoken": "^7.4.0",
+    "ws": "^2.3.1"
+  }
+}
