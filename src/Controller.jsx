@@ -62,6 +62,29 @@ export default class Controller extends Component {
    */
   componentWillMount() {
     this.props.liftUpSendingMessage(this.sendMessage.bind(this))
+
+    // define gyro
+    window.ondeviceorientation = event => {
+      let lock = false
+      if (this.state.isToggled) {
+        // const alpha = event.alpha // z-axis
+        // const beta = event.beta   // x-axis
+        const gamma = event.gamma // y-axis
+        if (lock) {
+          if (-70 < gamma && gammma < 70) {
+            lock = false
+          }
+        } else {
+          if (gamma > 70) {
+            this.props.onButtonNextClick()
+            lock = true
+          } else if (!gammma < -70){
+            this.props.onButtonPrevClick()
+            lock = true
+          }
+        }
+      }
+    }
   }
 
   /**
