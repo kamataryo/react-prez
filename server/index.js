@@ -30,7 +30,7 @@ const anycast = (origin, recognizr, self, message) => {
 }
 
 const wss = new WebSocket.Server({
-  port : 3001,
+  port : process.env.PORT || 3001,
   path : '/echo',
 })
 

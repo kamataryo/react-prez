@@ -47,7 +47,7 @@ export default class Controller extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      url        : 'ws://localhost:3001/echo',
+      url        : 'ws://prez-socket.biwako.io/echo',
       recognizr  : '',
       username   : '',
       password   : '',
