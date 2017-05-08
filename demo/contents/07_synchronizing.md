@@ -1,6 +1,6 @@
 <h1 style="text-align:center">Synchronizing</h1>
 
-Authenticate and synchronizing presentation among devices.
+sign in to synchronize presentation among devices.
 
 |smartphone|pc|
 |:--:|:--:|
