@@ -112,9 +112,9 @@ export default class Presentation extends Component {
    * @return {number}   +1: right, -1: left
    */
   swipeEnd(x) {
-    if (this.state.swipeFromX + 150 < x) {
+    if (this.state.swipeFromX + 120 < x) {
       return -1
-    } else if (this.state.swipeFromX - 150 > x) {
+    } else if (this.state.swipeFromX - 120 > x) {
       return +1
     } else {
       return 0
