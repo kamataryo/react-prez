@@ -1,0 +1,70 @@
+.react__prez__controller__wrap {
+  position            : fixed;
+  display             : block;
+  bottom              : 0;
+  width               : 100%;
+  padding             : 20px;
+  box-sizing          : border-box;
+  -webkit-box-sizing  : border-box;
+  background-color    : rgba(0, 0, 0, .8);
+  color               : #eee;
+  font-size           : 20px;
+  transition-duration : .3s;
+}
+
+.react__prez__controller__wrap.open {
+  height: 500px;
+}
+
+.react__prez__controller__wrap.close {
+  height: 80px;
+  opacity: 0;
+}
+
+@media (max-width: 480px) {
+  .react__prez__controller__wrap.close {
+    opacity: .5;
+  }
+}
+
+.react__prez__controller__wrap.close:hover {
+  opacity: .5;
+}
+
+.react__prez__controller__wrap .input-wrap {
+  display   : block;
+  max-width : 350px;
+  margin    : 1em;
+}
+
+.react__prez__controller__wrap label {
+  font-size        : 14px;
+  font-weight      : bold;
+}
+
+.react__prez__controller__wrap input {
+  width            : 100%;
+  font-size        : 20px;
+  font-weight      : 100;
+  padding          : 2px 5px;
+  background-color : transparent;
+  color            : #eee;
+  border-width     : 0 0 1px;
+  border-color     : #aaa;
+}
+
+.react__prez__controller__wrap input:focus {
+  outline: none;
+  border-color: salmon;
+}
+
+.react__prez__controller__wrap button {
+  background-color : transparent;
+  color            : #eee;
+  font-size        : 20px;
+  outline          : none;
+  padding          : 10px 20px;
+  margin-right     : 30px;
+  border-radius    : 5px;
+  border-width     : 2px;
+}
