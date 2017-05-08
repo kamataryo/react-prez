@@ -52,3 +52,10 @@ $ npm start
 ```shell
 $ npm version patch
 ```
+
+## WebSocket controller (alpha)
+
+1. Open presentation in both PC and iPhone. (Have not checked with Android yet.)
+1. Connect to WebSocket Server, which running `./dist/index.js` on both device.
+1. Authenticate with `admin:admin`(default) on both device.
+1. Control presentation with your device. Gyro controller is Avairable.
