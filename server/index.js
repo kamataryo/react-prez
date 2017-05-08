@@ -20,10 +20,10 @@ let connects = []
 const anycast = (origin, recognizr, self, message) => {
   connects
     .filter(connect => (
-      connect.socket !== self &&
-      connect.origin === origin &&
-      connect.recognizr === recognizr
-    ))
+        connect.socket !== self &&
+        connect.origin === origin &&
+        connect.recognizr === recognizr
+      ))
     .forEach(({ socket }) => {
       socket.send(JSON.stringify(message))
     })
@@ -35,10 +35,13 @@ const wss = new WebSocket.Server({
 })
 
 wss.on('connection', socket => {
+  socket.on('close', () => {
+    connects = connects.filter(connect => connect.socket !== socket)
+  })
 
   socket.on('message', message => {
+    console.log('connect')
     const data = JSON.parse(message)
-    console.log(data)
     const recognizr = data.recognizr ? data.recognizr : ''
     const origin = socket.upgradeReq.headers.origin
 
@@ -86,19 +89,7 @@ wss.on('connection', socket => {
             })
         })
         break
-      case 'close':
-        console.log('close')
-        jwt.verify(data.token, privateKey, err => {
-          if (err) {
-            socket.close()
-          }
-          connects = connects
-            .filter(connect => connect.socket !== socket)
-        })
-
       default:
-
     }
-
   })
 })
