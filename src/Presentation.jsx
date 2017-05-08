@@ -121,6 +121,11 @@ export default class Presentation extends Component {
     }
   }
 
+  /**
+   * Fire after downstream message revieved
+   * @param  {Object} data recieved data
+   * @return {void}
+   */
   _onSocketMessageRecieved(data) {
     this.page(data.pageNum - this.state.now, true)
   }
