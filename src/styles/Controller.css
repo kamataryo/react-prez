@@ -17,7 +17,7 @@
 }
 
 .react__prez__controller__wrap.close {
-  height: 80px;
+  height: 60px;
   opacity: 0;
 }
 
@@ -67,4 +67,14 @@
   margin-right     : 15px;
   border-radius    : 5px;
   border-width     : 2px;
+}
+
+.react__prez__controller__h2 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.react__prez__controller__authentication-wrap {
+  display: flex;
 }

@@ -51,6 +51,7 @@ export default class Controller extends Component {
       recognizr  : '',
       username   : '',
       password   : '',
+      email      : '',
       connection : null,
       isToggled  : false,
     }
@@ -193,6 +194,7 @@ export default class Controller extends Component {
       recognizr,
       username,
       password,
+      email,
       isToggled,
     } = this.state
 
@@ -206,63 +208,106 @@ export default class Controller extends Component {
           id={ 'button-page-prev' }
           onClick={ onButtonPrevClick }
         >{ 'prev' }</button>
+
         <button
           id={ 'button-page-next' }
           onClick={ onButtonNextClick }
         >{ 'next' }</button>
+
         <button
           className={ CLASS_PREFIX + 'button-close' }
           onClick={ () => this._toggle(!isToggled) }
         >{ isToggled ? 'close' : 'open' }</button>
+
+        {isConnected ? (
+          <button
+            onClick={ () => this.disconnect() }
+          >{ 'disconnect' }</button>
+        ) : null }
+
         {
-          isConnected ? (
-            <div className={ 'input-wrap' }>
-              <button
-                onClick={ () => this.disconnect() }
-              >{ 'disconnect' }</button>
-            </div>
-          ) : (
-            <div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'url' }>{ 'WebSocket Endpoint' }</label><br />
-                <input
-                  type={ 'url' }
-                  id={ 'url' }
-                  value={ url }
-                  onChange={ e => this._onFormChange('url', e.target.value) }
-                />
+          isConnected ? null : (
+            <div className={ CLASS_PREFIX + 'authentication-wrap' }>
+
+              <div className={ CLASS_PREFIX + 'login' }>
+                <h2 className={ CLASS_PREFIX + 'h2' }>{ 'login' }</h2>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'url' }>{ 'WebSocket Endpoint' }</label><br />
+                  <input
+                    type={ 'url' }
+                    id={ 'url' }
+                    value={ url }
+                    onChange={ e => this._onFormChange('url', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'recognizr' }>{ 'Recognizer' }</label><br />
+                  <input
+                    type={ 'text' }
+                    id={ 'recognizr' }
+                    value={ recognizr }
+                    onChange={ e => this._onFormChange('recognizr', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'username' }>{ 'Username' }</label><br />
+                  <input
+                    type={ 'text' }
+                    id={ 'username' }
+                    value={ username }
+                    onChange={ e => this._onFormChange('username', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'password' }>{ 'Password' }</label><br />
+                  <input
+                    type={ 'password' }
+                    id={ 'password' }
+                    value={ password }
+                    onChange={ e => this._onFormChange('password', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <button
+                    onClick={ () => this.connect(url, recognizr, username, password) }
+                  >{ 'connect' }</button>
+                </div>
               </div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'recognizr' }>{ 'Recognizer' }</label><br />
-                <input
-                  type={ 'text' }
-                  id={ 'recognizr' }
-                  value={ recognizr }
-                  onChange={ e => this._onFormChange('recognizr', e.target.value) }
-                />
-              </div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'username' }>{ 'Username' }</label><br />
-                <input
-                  type={ 'text' }
-                  id={ 'username' }
-                  value={ username }
-                  onChange={ e => this._onFormChange('username', e.target.value) }
-                />
-              </div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'password' }>{ 'Password' }</label><br />
-                <input
-                  type={ 'password' }
-                  id={ 'password' }
-                  value={ password }
-                  onChange={ e => this._onFormChange('password', e.target.value) }
-                />
-              </div>
-              <div className={ 'input-wrap' }>
-                <button
-                  onClick={ () => this.connect(url, recognizr, username, password) }
-                >{ 'connect' }</button>
+
+              <div className={ CLASS_PREFIX + 'signup' }>
+                <h2 className={ CLASS_PREFIX + 'h2' }>{ 'sign up' }</h2>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'email' }>{ 'email' }</label><br />
+                  <input
+                    type={ 'email' }
+                    id={ 'email' }
+                    value={ email }
+                    onChange={ e => this._onFormChange('email', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'username' }>{ 'Username' }</label><br />
+                  <input
+                    type={ 'text' }
+                    id={ 'username' }
+                    value={ username }
+                    onChange={ e => this._onFormChange('username', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <label htmlFor={ 'password' }>{ 'Password' }</label><br />
+                  <input
+                    type={ 'password' }
+                    id={ 'password' }
+                    value={ password }
+                    onChange={ e => this._onFormChange('password', e.target.value) }
+                  />
+                </div>
+                <div className={ 'input-wrap' }>
+                  <button
+                    onClick={ () => alert('signup') }
+                  >{ 'signup' }</button>
+                </div>
               </div>
             </div>
           )
