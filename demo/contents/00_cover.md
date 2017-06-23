@@ -5,12 +5,4 @@
 
 Make presentations with React and Markdown!
 
-## install
-
-```shell
-$ npm install react-prez --save
-```
-
-## repository
-
-[kamataryo/react-prez](https://github.com/kamataryo/react-prez)
+## WebSocketで作る次世代のプレゼンテーション
