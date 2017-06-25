@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "./bin/build.sh",
-    "build:preview": "node_modules/.bin/webpack -p -c ./demo/webpack.config.babel.js",
+    "build:preview": "node_modules/.bin/webpack -p --config=./demo/webpack.config.babel.js",
     "start": "./bin/start.sh",
     "lint": "eslint . --ext=jsx --ext=js",
     "test": "mocha",

@@ -1,7 +1,7 @@
 import path from 'path'
 
 export default {
-  entry: './preview.jsx',
+  entry: './demo/preview.jsx',
   output: {
     path: path.join(__dirname, '/'),
     publicPath: '',
@@ -25,7 +25,7 @@ export default {
   },
   plugins: [],
   devServer: {
-    contentBase: path.join(__dirname, '/'),
+    contentBase: path.join(__dirname, '/demo/'),
     compress: true,
     port: 3000
   }
