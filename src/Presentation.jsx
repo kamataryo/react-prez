@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
 import keydown              from 'react-keydown'
-import Progress     from './Progress.jsx'
-import Controller   from './Controller.jsx'
+import Progress     from './Progress'
+import Controller   from './Controller'
 import style        from './styles/presentation'
 
 /**

@@ -3,7 +3,7 @@ import PropTypes            from 'prop-types'
 import update               from 'immutability-helper'
 import request              from 'superagent'
 import marked               from 'marked'
-import Loading              from './Loading.jsx'
+import Loading              from './Loading'
 import style                from './styles/slide'
 import highlightJS          from 'highlight.js'
 
