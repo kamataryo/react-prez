@@ -2,13 +2,13 @@
   "name": "react-prez",
   "version": "0.6.2",
   "description": "Presentation with react",
-  "main": "lib/index.js",
+  "main": "lib/bundle.js",
   "files": [
     "lib"
   ],
   "scripts": {
     "build": "./bin/build.sh",
-    "build:preview": "node_modules/.bin/webpack -p",
+    "build:preview": "node_modules/.bin/webpack -p -c ./demo/webpack.config.babel.js",
     "start": "./bin/start.sh",
     "lint": "eslint . --ext=jsx --ext=js",
     "test": "mocha",

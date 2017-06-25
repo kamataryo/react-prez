@@ -1,9 +1,9 @@
 import path from 'path'
 
 export default {
-  entry: './src/index.js',
+  entry: './preview.jsx',
   output: {
-    path: path.join(__dirname, '/lib/'),
+    path: path.join(__dirname, '/'),
     publicPath: '',
     filename: 'bundle.js'
   },
@@ -25,7 +25,7 @@ export default {
   },
   plugins: [],
   devServer: {
-    contentBase: path.join(__dirname, '/lib/'),
+    contentBase: path.join(__dirname, '/'),
     compress: true,
     port: 3000
   }
