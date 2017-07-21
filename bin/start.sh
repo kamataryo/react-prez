@@ -14,7 +14,7 @@ LOCAL_BIN=./node_modules/.bin
 
 # start client developing
 if [[ $NODE_ENV != 'prouction' ]]; then
-  $LOCAL_BIN/webpack-dev-server --progress --colors --hot --inline --watch &
+  $LOCAL_BIN/webpack-dev-server --config=./demo/webpack.config.babel.js --progress --colors --hot --inline --watch &
   PS2=$!
 fi
 

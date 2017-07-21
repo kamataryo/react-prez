@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import update from 'immutability-helper'
-import './styles/Controller.css'
+import style from './styles/Controller.js'
+// import './styles/Controller.css'
 
 const CLASS_PREFIX = 'react__prez__controller__'
 
@@ -64,6 +65,10 @@ export default class Controller extends Component {
     this.props.liftUpSendingMessage(this.sendMessage.bind(this))
 
     let lock = false
+
+    if (!window) {
+      return
+    }
 
     // define gyro
     window.ondeviceorientation = event => {
@@ -201,66 +206,76 @@ export default class Controller extends Component {
     return (
       <nav
         className={ CLASS_PREFIX + 'wrap' + (isToggled ? ' open' : ' close') }
+        style={ { ...style.wrap, ...(isToggled ? style.wrap.$open : style.wrap.$close) } }
       >
         <button
+          style={ style.button }
           id={ 'button-page-prev' }
           onClick={ onButtonPrevClick }
         >{ 'prev' }</button>
         <button
+          style={ style.button }
           id={ 'button-page-next' }
           onClick={ onButtonNextClick }
         >{ 'next' }</button>
         <button
+          style={ style.button }
           className={ CLASS_PREFIX + 'button-close' }
           onClick={ () => this._toggle(!isToggled) }
         >{ isToggled ? 'close' : 'open' }</button>
         {
           isConnected ? (
-            <div className={ 'input-wrap' }>
+            <div style={ style.inputWrap } className={ 'input-wrap' }>
               <button
+                style={ style.button }
                 onClick={ () => this.disconnect() }
               >{ 'disconnect' }</button>
             </div>
           ) : (
             <div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'url' }>{ 'WebSocket Endpoint' }</label><br />
+              <div style={ style.inputWrap } className={ 'input-wrap' }>
+                <label style={ style.label } htmlFor={ 'url' }>{ 'WebSocket Endpoint' }</label><br />
                 <input
+                  style={ style.input }
                   type={ 'url' }
                   id={ 'url' }
                   value={ url }
                   onChange={ e => this._onFormChange('url', e.target.value) }
                 />
               </div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'recognizr' }>{ 'Recognizer' }</label><br />
+              <div style={ style.inputWrap } className={ 'input-wrap' }>
+                <label style={ style.label } htmlFor={ 'recognizr' }>{ 'Recognizer' }</label><br />
                 <input
+                  style={ style.input }
                   type={ 'text' }
                   id={ 'recognizr' }
                   value={ recognizr }
                   onChange={ e => this._onFormChange('recognizr', e.target.value) }
                 />
               </div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'username' }>{ 'Username' }</label><br />
+              <div style={ style.inputWrap } className={ 'input-wrap' }>
+                <label style={ style.label } htmlFor={ 'username' }>{ 'Username' }</label><br />
                 <input
+                  style={ style.input }
                   type={ 'text' }
                   id={ 'username' }
                   value={ username }
                   onChange={ e => this._onFormChange('username', e.target.value) }
                 />
               </div>
-              <div className={ 'input-wrap' }>
-                <label htmlFor={ 'password' }>{ 'Password' }</label><br />
+              <div style={ style.inputWrap } className={ 'input-wrap' }>
+                <label style={ style.label } htmlFor={ 'password' }>{ 'Password' }</label><br />
                 <input
+                  style={ style.input }
                   type={ 'password' }
                   id={ 'password' }
                   value={ password }
                   onChange={ e => this._onFormChange('password', e.target.value) }
                 />
               </div>
-              <div className={ 'input-wrap' }>
+              <div style={ style.inputWrap } className={ 'input-wrap' }>
                 <button
+                  style={ style.button }
                   onClick={ () => this.connect(url, recognizr, username, password) }
                 >{ 'connect' }</button>
               </div>

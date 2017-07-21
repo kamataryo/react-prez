@@ -3,7 +3,7 @@ import path from 'path'
 export default {
   entry: './demo/preview.jsx',
   output: {
-    path: path.join(__dirname, '/'),
+    path: path.join(__dirname, '/demo/'),
     publicPath: '',
     filename: 'bundle.js'
   },
@@ -16,10 +16,6 @@ export default {
       {
         test: /.jsx?$/,
         use: [{ loader: 'babel-loader?compact=false' }]
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
       }
     ]
   },
